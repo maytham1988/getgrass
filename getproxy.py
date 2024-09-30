@@ -7,9 +7,10 @@ import time
 # Path to the Git repository
 repo_path = '/data/data/com.termux/files/home/getgrass'
 
+
 while True:
     # Download the file from the URL
-    url = 'https://raw.githubusercontent.com/monosans/p'  # تکمیل آدرس URL در اینجا ضروری است
+    url = 'https://raw.githubusercontent.com/monosans/proxy-list/main/proxies/all.txt'
     response = requests.get(url)
     with open('all.txt', 'wb') as f:
         f.write(response.content)
@@ -23,6 +24,12 @@ while True:
 
     # Commit changes
     repo.index.commit('Automatic commit')
-    
-    # افزودن یک تایمر به منظور جلوگیری از اجرای مکرر بدون وقفه
-    time.sleep(60)  # اجرای حلقه هر 60 ثانیه
+
+    # Push changes to the 'main' branch of the remote repository
+    origin = repo.remote(name='origin')
+    origin.push('main')
+
+    # Wait for 5 minutes before running the loop again
+    time.sleep(60 * 60)
+
+
